@@ -6,6 +6,7 @@ import LoginRequired from "./components/LoginRequired";
 import HomePage from "./components/HomePage";
 import ResetPasswordPage from "./components/ResetPasswordPage";
 import Navigationbar from "./components/Navigationbar";
+import PasswordChangePage from "./components/PasswordChangePage";
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
@@ -93,6 +94,14 @@ function App() {
           element={
             <Layout>
               <HomePage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/passwordchange"
+          element={
+            <Layout>
+              <PasswordChangePage />
             </Layout>
           }
         />

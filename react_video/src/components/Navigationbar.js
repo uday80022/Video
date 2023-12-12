@@ -53,19 +53,19 @@ function Navigationbar() {
                   as={Link}
                   to="/passwordreset"
                   className={
-                    location.pathname === "/password-recovery" ? "active" : ""
+                    location.pathname === "/passwordreset" ? "active" : ""
                   }
                 >
                   Password Recovery
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
-                  to="/home"
+                  to="/passwordchange"
                   className={
-                    location.pathname === "/account_settings" ? "active" : ""
+                    location.pathname === "/passwordchange" ? "active" : ""
                   }
                 >
-                  Account Settings
+                  Password Change
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link

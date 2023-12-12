@@ -16,6 +16,7 @@ import base64
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 
 def home(request):
     return HttpResponse('Hello World')
@@ -175,8 +176,8 @@ def password_reset_confirm(request, uidb64, token, new_password):
     else:
         return JsonResponse({'status': 'error', 'message': 'Password reset link is invalid or expired.'})
     
-@login_required
 @csrf_exempt
+@login_required
 def user_logout(request):
     print(request.user.is_authenticated)
     print(request.user)
@@ -192,3 +193,20 @@ def check_authentication(request):
         return JsonResponse({"isAuthenticated": True})
     else:
         return JsonResponse({"isAuthenticated": False})
+    
+@csrf_exempt
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        current_password = data.get('current_password', None)
+        new_password = data.get('new_password', None)
+        if not request.user.check_password(current_password):
+            return JsonResponse({'status': 'error', 'message': 'Invalid current password'})
+        request.user.set_password(new_password)
+        request.user.save()
+        update_session_auth_hash(request, request.user)
+
+        return JsonResponse({'status': 'success', 'message': 'Password changed successfully'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
