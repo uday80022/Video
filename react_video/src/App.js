@@ -13,9 +13,12 @@ const Layout = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    console.log(
+      "useEffect is running. Current path:",
+      window.location.pathname
+    );
     const checkAuthentication = async () => {
       const exemptedRoutes = ["/register", "/login", "/passwordreset", "/"];
-
       if (!exemptedRoutes.includes(window.location.pathname)) {
         try {
           const response = await fetch(
